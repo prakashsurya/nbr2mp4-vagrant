@@ -1,0 +1,61 @@
+This repository is intended to utilize Vagrant[1] and Virtualbox[2] to
+automatically convert WebEx `.arf` files into `.mp3` and `.mp4` files.
+
+With Vagrant and Virtualbox properly installed and configured on a
+user's workstation, it should be a simple matter of running:
+
+    $ vagrant up
+
+This command will create a new Ubuntu 14.04 VM (possibly download any
+necessary VM images from the Vagrant Atlas), configure the system with
+the necessary packages and software, and then run the conversion tool[3]
+to actual do the conversion of `.arf` files to `.mp3` and `.mp4`.
+
+The files to be converted are automatically detected using the `.arf`
+files contained in the `arf` directory. Thus, one must place any files
+they wish to be converted into that directory, in order for them to be
+converted.
+
+The `.mp3` and `.mp4` output files from the conversion process will be
+placed into the `mp3` and `mp4` directories, and the output files will
+have the same name as the input `.arf` files; except the extension will
+be replaced to match the new media format (e.g. `.arf` replaced with
+`.mp3`).
+
+It's possible to add more `.arf` files retroactively. This is done
+simply by adding the new files to be converted into the `arf` directory,
+and running:
+
+    $ vagrant provision
+
+This will re-run the provisioning scripts, in which case the new files
+added to the input `arf` directory will be automatically detected and
+converted. Keep in mind, it's possible that manual tweaks to the VM has
+gotten it into an incompatible state (e.g. if it was rebooted, the
+`/vagrant` synced folder may not be mounted), in which case a reload of
+the guest might need to be issued:
+
+    $ vagrant reload
+
+This will reboot the VM, after which it should be possible to rerun the
+provision scripts as detailed above. If that doesn't help, the whole VM
+might need to be destroyed and recreated, this is possible by running
+these two commands:
+
+    $ vagrant destroy -f
+    $ vagrant up
+
+Be careful, though, this will completely destroy the VM and any files
+and data it contains (excluding the `/vagrant` directory).
+
+NOTE: While it's intended to convert the `.arf` files into the `.mp4`
+format, that functionality doesn't quite work yet so it has been
+disabled. Currently, only `.mp3` files will be created; but it's
+possible that `.mp4` conversion support will be fixed at some point.
+
+References:
+
+    1. https://www.vagrantup.com/
+    2. https://www.virtualbox.org/
+    3. https://www.webex.co.uk/support/downloads.html
+       ("NBR2MP4 Converter" section)

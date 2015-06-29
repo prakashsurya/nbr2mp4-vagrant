@@ -1,0 +1,3 @@
+This directory is intended to contain output files from the conversion
+process only. As WebEx ".arf" files are converted into the ".mp3"
+format, the resultant ".mp3" files will be placed here.
